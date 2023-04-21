@@ -116,6 +116,8 @@
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS castings;
+DROP TABLE IF EXISTS studios;
+
 
 
 -- Create new tables, according to your domain model
@@ -204,8 +206,14 @@ ORDER BY release_year;
 -- The SQL statement for the cast output
 -- TODO!
 
+SELECT movies.title, castings.character_name
+FROM movies
+INNER JOIN castings ON castings.id_movie = movies.id_movie;
 
 SELECT movies.title, actors.actor_name, castings.character_name
 FROM movies
 INNER JOIN castings ON castings.id_movie = movies.id_movie
-INNER JOIN actors ON castings.id_actor = actors.id_actor;
+INNER JOIN actors ON castings.id_actor = actors.id_actor
+GROUP BY title;
+
+
