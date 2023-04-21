@@ -106,12 +106,81 @@
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
 
+--"One to many" between studios and movies
+--A studio can make many movies but one movie can only be made by one studio
+
+--"Many to many" between actors and movies
+--One movie has many actors
+--One actor has many movies
+
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS castings;
+
+
 -- Create new tables, according to your domain model
 -- TODO!
+
+CREATE TABLE movies (
+    id_movie INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    release_year INTEGER,
+    rating TEXT,
+    studio TEXT
+);
+
+CREATE TABLE actors (
+    id_actor INTEGER PRIMARY KEY AUTOINCREMENT,
+    actor_name TEXT
+);
+
+CREATE TABLE castings (
+    id_character INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_actor TEXT,
+    character_name TEXT,
+    id_movie INTEGER
+);
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+INSERT INTO movies (id_movie, title, release_year, rating, studio)
+    
+VALUES (1, "Batman Begins", 2005, "PG-13", "Warner Bros."),
+ (2, "The Dark Knight", 2008, "PG-13", "Warner Bros."), 
+ (3, "The Dark Knight Rises", 2012, "PG-13", "Warner Bros.");
+
+INSERT INTO actors (id_actor, actor_name)
+VALUES (1, Christian Bale),
+(2,	Michael Caine),
+(3,	Liam Neeson),
+(4, Katie Holmes),
+(5,	Gary Oldman),
+(6,	Heath Ledger),
+(7,	Aaron Eckhart),
+(8,	Maggie Gyllenhaal),
+(9,	Tom Hardy),
+(10, Joseph Gordon-Levitt),
+(11, Anne Hathaway)
+
+
+INSERT INTO castings (id_movie, character_name, id_character, id_actor)
+VALUES (1, "Bruce Wayne", 1 ,1),
+(1, "Alfred", 2 ,2),
+(1, "Ra's Al Ghul", 3 ,3),
+(1, "Rachel Dawes", 4 ,4),
+(1, "Commissioner Gordon", 5 ,5),
+(2, "Bruce Wayne", 1 ,1),
+(2, "Joker", 6 ,6),
+(2, "Harvey Dent", 7 ,7),
+(2, "Alfred", 2 ,2),
+(2, "Rachel Dawes", 4 ,8),
+(3, "Bruce Wayne", 1 ,1),
+(3, "Commissioner Gordon", 5 ,5),
+(3, "Bane", 8 ,9),
+(3, "John Blake", 9 ,10),
+(3, "Selina Kyle", 10 ,11);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -120,6 +189,10 @@
 
 -- The SQL statement for the movies output
 -- TODO!
+
+SELECT title, release_year, rating, studio
+FROM movies
+ORDER BY release_year; 
 
 -- Prints a header for the cast output
 .print ""
@@ -130,3 +203,9 @@
 
 -- The SQL statement for the cast output
 -- TODO!
+
+
+SELECT movies.title, actors.actor_name, castings.character_name
+FROM movies
+INNER JOIN castings ON castings.id_movie = movies.id_movie
+INNER JOIN actors ON castings.id_actor = actors.id_actor;
