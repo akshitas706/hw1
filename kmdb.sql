@@ -124,7 +124,8 @@ DROP TABLE IF EXISTS studios;
 -- TODO!
 
 CREATE TABLE movies (
-    id_movie INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_movie INTEGER,
     title TEXT,
     release_year INTEGER,
     rating TEXT,
@@ -141,8 +142,7 @@ CREATE TABLE castings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_character INTEGER,
     character_name TEXT,
-    id_actor TEXT,
-
+    id_actor INTEGER,
     id_movie INTEGER
 );
 
@@ -150,42 +150,42 @@ CREATE TABLE castings (
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
 
-INSERT INTO movies (id_movie, title, release_year, rating, studio)
+INSERT INTO movies (id, id_movie, title, release_year, rating, studio)
     
-VALUES (1, "Batman Begins", 2005, "PG-13", "Warner Bros."),
- (2, "The Dark Knight", 2008, "PG-13", "Warner Bros."), 
- (3, "The Dark Knight Rises", 2012, "PG-13", "Warner Bros.");
+VALUES (1,1, "Batman Begins", 2005, "PG-13", "Warner Bros."),
+ (2,2, "The Dark Knight", 2008, "PG-13", "Warner Bros."), 
+ (3,3, "The Dark Knight Rises", 2012, "PG-13", "Warner Bros.");
 
-INSERT INTO actors (id_actor, actor_name)
-VALUES (1,1, Christian Bale),
-(2,2,	Michael Caine),
-(3,3,	Liam Neeson),
-(4,4, Katie Holmes),
-(5,5,	Gary Oldman),
-(6,6,	Heath Ledger),
-(7,7,	Aaron Eckhart),
-(8,8,	Maggie Gyllenhaal),
-(9,9,	Tom Hardy),
-(10,10, Joseph Gordon-Levitt),
-(11, 11, Anne Hathaway);
+INSERT INTO actors (id, id_actor, actor_name)
+VALUES (1,1, "Christian Bale"),
+(2,2,	"Michael Caine"),
+(3,3,	"Liam Neeson"),
+(4,4, "Katie Holmes"),
+(5,5,	"Gary Oldman"),
+(6,6,	"Heath Ledger"),
+(7,7,	"Aaron Eckhart"),
+(8,8,	"Maggie Gyllenhaal"),
+(9,9,	"Tom Hardy"),
+(10,10, "Joseph Gordon-Levitt"),
+(11, 11, "Anne Hathaway");
 
 
 INSERT INTO castings (id, id_character, id_actor,character_name,id_movie)
 VALUES (1, 1, 1, "Bruce Wayne ", 1),
-(2, 2, 2, "Alfred  ", 1),
+(2, 2, 2, "Alfred", 1),
 (3, 3, 3, "Ra's Al Ghul", 1),
-(4, 4, 4, "Rachel Dawes ", 1),
+(4, 4, 4, "Rachel Dawes", 1),
 (5, 5, 5, "Commissioner Gordon ", 1),
-(6, 1, 1, "Bruce Wayne ", 2),
-(7, 6, 6, "Joker  ", 2),
-(8, 7, 7, "Harvey Dent ", 2),
-(9, 2, 2, "Alfred  ", 2),
+(6, 1, 1, "Bruce Wayne", 2),
+(7, 6, 6, "Joker", 2),
+(8, 7, 7, "Harvey Dent", 2),
+(9, 2, 2, "Alfred", 2),
 (10, 4, 8, "Rachel Dawes ", 3),
 (11, 1, 1, "Bruce Wayne ", 3),
 (12, 5, 5, "Commissioner Gordon ", 3),
-(13, 8, 9, "Bane  ", 3),
-(14, 9, 10, "John Blake ", 3),
-(15, 10, 11, "Selina Kyle ", 3);
+(13, 8, 9, "Bane", 3),
+(14, 9, 10, "John Blake", 3),
+(15, 10, 11, "Selina Kyle", 3);
 
 
 -- Prints a header for the movies output
@@ -211,7 +211,8 @@ ORDER BY release_year;
 -- TODO!
 
 
-SELECT movies.title, actors.actor_name, castings.character_name
+
+SELECT movies.title, castings.character_name, actors.actor_name
 FROM movies
 INNER JOIN castings ON castings.id_movie = movies.id_movie
 INNER JOIN actors ON actors.id_actor = castings.id_actor;
