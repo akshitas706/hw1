@@ -214,8 +214,5 @@ ORDER BY release_year;
 SELECT movies.title, actors.actor_name, castings.character_name
 FROM movies
 INNER JOIN castings ON castings.id_movie = movies.id_movie
-INNER JOIN actors ON actors.id_actor = castings.id_actor
-
-GROUP BY title;
-
+INNER JOIN actors ON actors.id_actor = castings.id_actor;
 
